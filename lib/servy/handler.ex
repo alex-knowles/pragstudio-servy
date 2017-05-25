@@ -7,8 +7,9 @@ defmodule Servy.Handler do
   end
 
   def parse(request) do
-    # TODO: Parse the request string into a map:
-    conv = %{ method: "GET", path: "/wildthings", resp_body: "" }
+    first_line = request |> String.split("\n") |> List.first
+    [method, path, _] = String.split(first_line, " ")
+    %{ method: method, path: path, resp_body: "" }
   end
 
   def route(conv) do
