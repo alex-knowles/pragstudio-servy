@@ -36,8 +36,8 @@ defmodule Servy.Handler do
     %{ conv | status: 200, resp_body: "Teddy, Smokey, Paddington" }
   end
 
-  def route(conv, "DELETE", "/bears/" <> id) do
-    %{ conv | status: 200, resp_body: "Deleted bear #{id}!" }
+  def route(conv, "DELETE", "/bears/" <> _id) do
+    %{ conv | status: 403, resp_body: "Bears are a protected species!" }
   end
 
   def route(conv, _method, path) do
