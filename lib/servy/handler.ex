@@ -32,20 +32,20 @@ defmodule Servy.Handler do
     }
   end
 
-  def route( %{method: "GET", path: "/wildthings"} = conv) do
-    %{ conv | status: 200, resp_body: "Bears, Lions, Tigers" }
+  def route(%{method: "GET", path: "/wildthings"} = conv) do
+    %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
   end
 
-  def route( %{method: "GET", path: "/bears"} = conv) do
-    %{ conv | status: 200, resp_body: "Teddy, Smokey, Paddington" }
+  def route(%{method: "GET", path: "/bears"} = conv) do
+    %{conv | status: 200, resp_body: "Teddy, Smokey, Paddington"}
   end
 
-  def route( %{method: "DELETE", path: "/bears/" <> _id} = conv) do
-    %{ conv | status: 403, resp_body: "Bears are a protected species!" }
+  def route(%{method: "DELETE", path: "/bears/" <> _id} = conv) do
+    %{conv | status: 403, resp_body: "Bears are a protected species!"}
   end
 
-  def route( %{path: path} = conv) do
-    %{ conv | status: 404, resp_body: "#{path} not found" }
+  def route(%{path: path} = conv) do
+    %{conv | status: 404, resp_body: "#{path} not found"}
   end
 
   def track(%{status: 404, path: path} = conv) do
