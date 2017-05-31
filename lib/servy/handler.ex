@@ -83,6 +83,14 @@ defmodule Servy.Handler do
     |> handle_file(conv)
   end
 
+  def route(%{method: "GET", path: "/about"} = conv) do
+    page = "about"
+    @pages_path
+    |> Path.join("#{page}.html")
+    |> File.read
+    |> handle_file(conv)
+  end
+
   def route(%{path: path} = conv) do
     %{conv | status: 404, resp_body: "#{path} not found"}
   end
@@ -206,6 +214,17 @@ IO.puts(response)
 
 request = """
 GET /pages/about HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response = Servy.Handler.handle(request)
+IO.puts(response)
+
+request = """
+GET /about HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
