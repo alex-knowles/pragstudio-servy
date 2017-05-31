@@ -1,4 +1,9 @@
 defmodule Servy.Handler do
+  @moduledoc "Handles HTTP requests."
+
+  @pages_path Path.expand("../../pages", __DIR__)
+
+  @doc "Handle a given request and returns a response."
   def handle(request) do
     request
     |> parse
@@ -72,7 +77,15 @@ defmodule Servy.Handler do
   end
 
   def route(%{method: "GET", path: "/pages/" <> page} = conv) do
-    Path.expand("../../pages", __DIR__)
+    conv |> route_for_page(page)
+  end
+
+  def route(%{method: "GET", path: "/about"} = conv) do
+    conv |> route_for_page("about")
+  end
+
+  def route_for_page(conv, page) do
+    @pages_path
     |> Path.join("#{page}.html")
     |> File.read
     |> handle_file(conv)
@@ -201,6 +214,17 @@ IO.puts(response)
 
 request = """
 GET /pages/about HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response = Servy.Handler.handle(request)
+IO.puts(response)
+
+request = """
+GET /about HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
