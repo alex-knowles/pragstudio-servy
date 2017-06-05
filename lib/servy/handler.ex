@@ -27,7 +27,7 @@ defmodule Servy.Handler do
   end
 
   def route(%{method: "GET", path: "/bears/new"} = conv) do
-    Path.expand("../../pages", __DIR__)
+    Path.expand("pages", File.cwd!)
     |> Path.join("form.html")
     |> File.read
     |> handle_file(conv)
