@@ -24,14 +24,16 @@ defmodule Servy.Handler do
 
   @pages_path Path.expand("../../pages", __DIR__)
 
+  import Servy.Plugins, only: [rewrite_path: 1, log: 1, track: 1]
+
   @doc "Handle a given request and returns a response."
   def handle(request) do
     request
     |> parse
-    |> Servy.Plugins.rewrite_path
-    |> Servy.Plugins.log
+    |> rewrite_path
+    |> log
     |> route
-    |> Servy.Plugins.track
+    |> track
     |> format_response
   end
 
