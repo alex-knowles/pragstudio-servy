@@ -51,15 +51,15 @@ defmodule Servy.Handler do
     conv |> route_for_page("about")
   end
 
+  def route(%{path: path} = conv) do
+    %{conv | status: 404, resp_body: "#{path} not found"}
+  end
+
   def route_for_page(%Conv{} = conv, page) do
     @pages_path
     |> Path.join("#{page}.html")
     |> File.read
     |> handle_file(conv)
-  end
-
-  def route(%{path: path} = conv) do
-    %{conv | status: 404, resp_body: "#{path} not found"}
   end
 
   def format_response(conv) do
