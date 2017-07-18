@@ -28,6 +28,12 @@ defmodule Servy.Handler do
     %{conv | status: 200, resp_body: "Teddy, Smokey, Paddington"}
   end
 
+  # name=Baloo&type=Brown
+  def route(%Conv{method: "POST", path: "/bears"} = conv) do
+    %{conv | status: 201,
+              resp_body: "Create a bear!"}
+  end
+
   def route(%Conv{method: "GET", path: "/bears/new"} = conv) do
     Path.expand("pages", File.cwd!)
     |> Path.join("form.html")
