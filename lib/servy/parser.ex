@@ -4,12 +4,8 @@ defmodule Servy.Parser do
 
   def parse(request) do
     [top, params] = String.split(request, "\n\n")
-
-    [method, path, _] =
-      top
-      |> String.split("\n")
-      |> List.first
-      |> String.split(" ")
+    [request_line | _header_lines] = String.split(top, "\n")
+    [method, path, _] = String.split(request_line, " ")
 
     params = parse_params(params)
 
